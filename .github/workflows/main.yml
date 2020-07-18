@@ -1,0 +1,43 @@
+name: Main
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    name: Build Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup | Checkout
+        uses: actions/checkout@v2.3.1
+        with:
+          fetch-depth: 0
+
+      - name: Build | Zip Files
+        run: |
+          mkdir -p ./dist
+          tar -czvf ./dist/raspberrypi-motd-horizontal.tar.gz -C ./src/horizontal .
+          tar -czvf ./dist/raspberrypi-motd-vertical.tar.gz -C ./src/vertical .
+
+      - name: Setup | Go
+        uses: actions/setup-go@v2.1.0
+        with:
+          go-version: "^1.14.x"
+
+      - name: Setup | Checksums
+        run: for file in dist/raspberrypi-*; do openssl dgst -sha256 -r "$file" | awk '{print $1}' > "${file}.sha256"; done
+
+      - name: Setup | Release Notes
+        run: |
+          go get -u github.com/git-chglog/git-chglog/cmd/git-chglog
+          git-chglog -c .github/chglog/release.yml $(git describe --tags) > RELEASE.md
+
+      - name: Build | Publish
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/raspberrypi-*
+          body_path: RELEASE.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

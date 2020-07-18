@@ -1,0 +1,45 @@
+{
+  "private": true,
+  "name": "raspberrypi-motd",
+  "description": "A custom message of the day (MOTD) for Raspberry Pi OS.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Iolar Demartini Junior",
+    "email": "iolardemartini@gmail.com",
+    "url": "https://demartini.dev"
+  },
+  "contributors": [
+    {
+      "name": "Raspberry Pi MOTD Contributors",
+      "url": "https://github.com/demartini/raspberrypi-motd/graphs/contributors"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demartini/raspberrypi-motd.git"
+  },
+  "keywords": [
+    "raspberrypi",
+    "motd",
+    "bash"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/demartini/raspberrypi-motd/issues"
+  },
+  "homepage": "https://github.com/demartini/raspberrypi-motd#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^9.1.1",
+    "@commitlint/config-conventional": "^9.1.1",
+    "husky": "^4.2.5",
+    "standard-version": "^8.0.2"
+  },
+  "scripts": {
+    "release": "standard-version"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}
