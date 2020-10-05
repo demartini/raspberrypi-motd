@@ -22,7 +22,7 @@ jobs:
           tar -czvf ./dist/raspberrypi-motd-vertical.tar.gz -C ./src/vertical .
 
       - name: Setup | Go
-        uses: actions/setup-go@v2.1.2
+        uses: actions/setup-go@v2.1.3
         with:
           go-version: "^1.14.x"
 
